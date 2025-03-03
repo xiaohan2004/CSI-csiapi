@@ -1,0 +1,21 @@
+package org.example.csiapi.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.example.csiapi.pojo.Status;
+
+@Mapper
+public interface StatusMapper {
+
+    @Select("SELECT * FROM status ORDER BY id DESC LIMIT 1")
+    Status getNewestStatusById();
+
+    @Select("SELECT * FROM status ORDER BY start_timestamp LIMIT 1")
+    Status getNewestStatusByStart();
+
+    @Select("SELECT * FROM status ORDER BY end_timestamp LIMIT 1")
+    Status getNewestStatusByEnd();
+
+    @Select("SELECT * FROM status WHERE #{timestamp} >= status.start_timestamp and #{timestamp} <= status.end_timestamp LIMIT 1")
+    Status getStatusByTimestamp(Long timestamp);
+}
