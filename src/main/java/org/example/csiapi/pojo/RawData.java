@@ -12,4 +12,5 @@ public class RawData {
     private String deviceId;
     private Long timestamp;
     private String csiData;
+    private Short processed;
 }
