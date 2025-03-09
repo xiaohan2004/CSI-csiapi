@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.example.csiapi.pojo.Status;
 
+import java.util.List;
+
 @Mapper
 public interface StatusMapper {
 
@@ -18,4 +20,7 @@ public interface StatusMapper {
 
     @Select("SELECT * FROM status WHERE #{timestamp} >= status.start_timestamp and #{timestamp} <= status.end_timestamp LIMIT 1")
     Status getStatusByTimestamp(Long timestamp);
+
+    @Select("SELECT * FROM status WHERE start_timestamp <= #{endTime} AND end_timestamp >= #{startTime} ORDER BY start_timestamp ASC")
+    List<Status> getStatusBetween(Long startTime, Long endTime);
 }

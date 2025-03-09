@@ -38,4 +38,9 @@ public class RawDataServiceImpl implements RawDataService {
     public RawData getRawDataByTimestamp(Long timestamp) {
         return rawDataMapper.getRawDataByTimestamp(timestamp);
     }
+
+    @Override
+    public List<RawData> getRawDataBetween(Long startTime, Long endTime) {
+        return rawDataMapper.getRawDataBetween(startTime, endTime);
+    }
 }

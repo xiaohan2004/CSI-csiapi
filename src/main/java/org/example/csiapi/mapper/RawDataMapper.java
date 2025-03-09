@@ -20,4 +20,7 @@ public interface RawDataMapper {
     // 查找时间戳在timestamp-350和timestamp+350之间的数据，返回差值最小的一条数据
     @Select("SELECT * FROM raw_data WHERE ABS(timestamp - #{timestamp}) <= 350 ORDER BY ABS(timestamp - #{timestamp}) LIMIT 1")
     RawData getRawDataByTimestamp(Long timestamp);
+
+    @Select("SELECT * FROM raw_data WHERE timestamp BETWEEN #{startTime} AND #{endTime} ORDER BY timestamp ASC")
+    List<RawData> getRawDataBetween(Long startTime, Long endTime);
 }
