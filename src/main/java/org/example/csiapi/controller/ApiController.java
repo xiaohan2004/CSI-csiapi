@@ -127,4 +127,16 @@ public class ApiController {
         }
         return Result.success(data);
     }
+
+    // 获取原始数据总数
+    @GetMapping("/rawData/count")
+    public Result getRawDataCount() {
+        return Result.success(rawDataService.getCount());
+    }
+
+    // 获取状态数据总数
+    @GetMapping("/status/count") 
+    public Result getStatusCount() {
+        return Result.success(StatusService.getCount());
+    }
 }

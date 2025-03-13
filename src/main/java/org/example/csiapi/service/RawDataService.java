@@ -10,4 +10,5 @@ public interface RawDataService {
     List<RawData> getRawDataListAsc(Integer page, Integer pageSize);
     RawData getRawDataByTimestamp(Long timestamp);
     List<RawData> getRawDataBetween(Long startTime, Long endTime);
+    Long getCount();
 }

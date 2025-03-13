@@ -11,4 +11,5 @@ public interface StatusService {
     Status getNewestStatusByStart();
     Status getNewestStatusByEnd();
     List<Status> getStatusBetween(Long startTime, Long endTime);
+    Long getCount();
 }

@@ -23,4 +23,7 @@ public interface RawDataMapper {
 
     @Select("SELECT * FROM raw_data WHERE timestamp BETWEEN #{startTime} AND #{endTime} ORDER BY timestamp ASC")
     List<RawData> getRawDataBetween(Long startTime, Long endTime);
+
+    @Select("SELECT COUNT(*) FROM raw_data")
+    Long getCount();
 }

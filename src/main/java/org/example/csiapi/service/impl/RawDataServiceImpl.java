@@ -43,4 +43,9 @@ public class RawDataServiceImpl implements RawDataService {
     public List<RawData> getRawDataBetween(Long startTime, Long endTime) {
         return rawDataMapper.getRawDataBetween(startTime, endTime);
     }
+
+    @Override
+    public Long getCount() {
+        return rawDataMapper.getCount();
+    }
 }

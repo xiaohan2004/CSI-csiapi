@@ -179,6 +179,20 @@
 }
 ```
 
+### 7. 获取状态数据总数
+- 端点: `/status/count`
+- 方法: GET
+- 描述: 获取状态数据表中的总记录数
+- 请求示例: `GET http://localhost:8080/api/status/count`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success", 
+    "data": 500
+}
+```
+
 ## 原始数据接口
 
 ### 1. 分页获取原始数据（降序）
@@ -332,6 +346,20 @@
     "code": 0,
     "msg": "开始时间必须小于结束时间",
     "data": null
+}
+```
+
+### 6. 获取原始数据总数
+- 端点: `/rawData/count`
+- 方法: GET
+- 描述: 获取原始数据表中的总记录数
+- 请求示例: `GET http://localhost:8080/api/rawData/count`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": 1000
 }
 ```
 

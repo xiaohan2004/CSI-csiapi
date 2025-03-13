@@ -46,4 +46,9 @@ public class StatusServiceImpl implements StatusService {
     public List<Status> getStatusBetween(Long startTime, Long endTime) {
         return statusMapper.getStatusBetween(startTime, endTime);
     }
+
+    @Override
+    public Long getCount() {
+        return statusMapper.getCount();
+    }
 }

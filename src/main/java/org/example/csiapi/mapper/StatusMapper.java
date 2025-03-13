@@ -23,4 +23,7 @@ public interface StatusMapper {
 
     @Select("SELECT * FROM status WHERE start_timestamp <= #{endTime} AND end_timestamp >= #{startTime} ORDER BY start_timestamp ASC")
     List<Status> getStatusBetween(Long startTime, Long endTime);
+
+    @Select("SELECT COUNT(*) FROM status")
+    Long getCount();
 }
