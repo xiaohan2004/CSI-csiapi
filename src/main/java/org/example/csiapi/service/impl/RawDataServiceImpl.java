@@ -2,9 +2,11 @@ package org.example.csiapi.service.impl;
 
 import org.example.csiapi.mapper.RawDataMapper;
 import org.example.csiapi.pojo.RawData;
+import org.example.csiapi.pojo.RawDataPage;
 import org.example.csiapi.service.RawDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,15 +25,23 @@ public class RawDataServiceImpl implements RawDataService {
     }
 
     @Override
-    public List<RawData> getRawDataListDesc(Integer page, Integer pageSize) {
+    @Transactional
+    public RawDataPage getRawDataListDesc(Integer page, Integer pageSize) {
         int offset = (page - 1) * pageSize;
-        return rawDataMapper.getRawDataListDesc(offset, pageSize);
+        List<RawData> rawData = rawDataMapper.getRawDataListDesc(offset, pageSize);
+        Long total = rawDataMapper.getCount();
+        RawDataPage rawDataPage = new RawDataPage(total, rawData);
+        return rawDataPage;
     }
 
     @Override
-    public List<RawData> getRawDataListAsc(Integer page, Integer pageSize) {
+    @Transactional
+    public RawDataPage getRawDataListAsc(Integer page, Integer pageSize) {
         int offset = (page - 1) * pageSize;
-        return rawDataMapper.getRawDataListAsc(offset, pageSize);
+        List<RawData> rawData = rawDataMapper.getRawDataListAsc(offset, pageSize);
+        Long total = rawDataMapper.getCount();
+        RawDataPage rawDataPage = new RawDataPage(total, rawData);
+        return rawDataPage;
     }
 
     @Override

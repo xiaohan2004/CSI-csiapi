@@ -208,22 +208,25 @@
 {
     "code": 1,
     "msg": "success",
-    "data": [
-        {
-            "id": 2,
-            "deviceId": "device001",
-            "timestamp": 1648000010000,
-            "csiData": "...",
-            "processed": 1
-        },
-        {
-            "id": 1,
-            "deviceId": "device001",
-            "timestamp": 1648000000000,
-            "csiData": "...",
-            "processed": 1
-        }
-    ]
+    "data": {
+        "total": 100,
+        "records": [
+            {
+                "id": 2,
+                "deviceId": "device001",
+                "timestamp": 1648000010000,
+                "csiData": "...",
+                "processed": 1
+            },
+            {
+                "id": 1,
+                "deviceId": "device001",
+                "timestamp": 1648000000000,
+                "csiData": "...",
+                "processed": 1
+            }
+        ]
+    }
 }
 ```
 
@@ -240,22 +243,25 @@
 {
     "code": 1,
     "msg": "success",
-    "data": [
-        {
-            "id": 1,
-            "deviceId": "device001",
-            "timestamp": 1648000000000,
-            "csiData": "...",
-            "processed": 1
-        },
-        {
-            "id": 2,
-            "deviceId": "device001",
-            "timestamp": 1648000010000,
-            "csiData": "...",
-            "processed": 1
-        }
-    ]
+    "data": {
+        "total": 100,
+        "records": [
+            {
+                "id": 1,
+                "deviceId": "device001",
+                "timestamp": 1648000000000,
+                "csiData": "...",
+                "processed": 1
+            },
+            {
+                "id": 2,
+                "deviceId": "device001",
+                "timestamp": 1648000010000,
+                "csiData": "...",
+                "processed": 1
+            }
+        ]
+    }
 }
 ```
 
