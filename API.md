@@ -13,7 +13,81 @@
 
 ## 状态数据接口
 
-### 1. 获取最新状态
+### 1. 分页获取状态数据（降序）
+- 端点: `/status/desc`
+- 方法: GET
+- 参数:
+  - page: 页码（默认1）
+  - pageSize: 每页大小（默认10）
+- 描述: 按时间戳降序获取状态数据
+- 请求示例: `GET http://localhost:8080/api/status/desc?page=1&pageSize=2`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "total": 100,
+        "records": [
+            {
+                "id": 2,
+                "deviceId": "device001",
+                "startTimestamp": 1648000010000,
+                "endTimestamp": 1648000020000,
+                "status": 1,
+                "confidence": 0.95
+            },
+            {
+                "id": 1,
+                "deviceId": "device001",
+                "startTimestamp": 1648000000000,
+                "endTimestamp": 1648000010000,
+                "status": 1,
+                "confidence": 0.95
+            }
+        ]
+    }
+}
+```
+
+### 2. 分页获取状态数据（升序）
+- 端点: `/status/asc`
+- 方法: GET
+- 参数:
+  - page: 页码（默认1）
+  - pageSize: 每页大小（默认10）
+- 描述: 按时间戳升序获取状态数据
+- 请求示例: `GET http://localhost:8080/api/status/asc?page=1&pageSize=2`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "total": 100,
+        "records": [
+            {
+                "id": 1,
+                "deviceId": "device001",
+                "startTimestamp": 1648000000000,
+                "endTimestamp": 1648000010000,
+                "status": 1,
+                "confidence": 0.95
+            },
+            {
+                "id": 2,
+                "deviceId": "device001",
+                "startTimestamp": 1648000010000,
+                "endTimestamp": 1648000020000,
+                "status": 1,
+                "confidence": 0.95
+            }
+        ]
+    }
+}
+```
+
+### 3. 获取最新状态
 - 端点: `/status/latest`
 - 方法: GET
 - 描述: 获取最新的状态信息（按结束时间）
@@ -34,7 +108,7 @@
 }
 ```
 
-### 2. 根据时间戳获取状态
+### 4. 根据时间戳获取状态
 - 端点: `/status/{timestamp}`
 - 方法: GET
 - 参数: 
@@ -74,7 +148,7 @@
 }
 ```
 
-### 3. 获取最新状态（按ID）
+### 5. 获取最新状态（按ID）
 - 端点: `/status/latestById`
 - 方法: GET
 - 描述: 获取ID最大的状态记录
@@ -95,7 +169,7 @@
 }
 ```
 
-### 4. 获取最新状态（按开始时间）
+### 6. 获取最新状态（按开始时间）
 - 端点: `/status/latestByStart`
 - 方法: GET
 - 描述: 获取开始时间最新的状态记录
@@ -116,7 +190,7 @@
 }
 ```
 
-### 5. 获取最新状态（按结束时间）
+### 7. 获取最新状态（按结束时间）
 - 端点: `/status/latestByEnd`
 - 方法: GET
 - 描述: 获取结束时间最新的状态记录
@@ -137,7 +211,7 @@
 }
 ```
 
-### 6. 获取时间段内的状态数据
+### 8. 获取时间段内的状态数据
 - 端点: `/status/between`
 - 方法: GET
 - 参数:
@@ -179,7 +253,7 @@
 }
 ```
 
-### 7. 获取状态数据总数
+### 9. 获取状态数据总数
 - 端点: `/status/count`
 - 方法: GET
 - 描述: 获取状态数据表中的总记录数

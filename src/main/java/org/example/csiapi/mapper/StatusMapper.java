@@ -26,4 +26,10 @@ public interface StatusMapper {
 
     @Select("SELECT COUNT(*) FROM status")
     Long getCount();
+
+    @Select("SELECT * FROM status ORDER BY id DESC LIMIT #{pageSize} OFFSET #{offset}")
+    List<Status> getStatusListDesc(int offset, Integer pageSize);
+
+    @Select("SELECT * FROM status ORDER BY id ASC LIMIT #{pageSize} OFFSET #{offset}")
+    List<Status> getStatusListAsc(int offset, Integer pageSize);
 }

@@ -22,6 +22,22 @@ public class StatusController {
         this.rawDataService = rawDataService;
     }
 
+    // 分页获取状态（降序）
+    @GetMapping("/desc")
+    public Result getStatusDesc(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        return Result.success(StatusService.getStatusListDesc(page, pageSize));
+    }
+
+    // 分页获取状态（升序）
+    @GetMapping("/asc")
+    public Result getStatusAsc(
+            @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
+        return Result.success(StatusService.getStatusListAsc(page, pageSize));
+    }
+
     // 获取最新状态
     @GetMapping("/latest")
     public Result getStatus() {

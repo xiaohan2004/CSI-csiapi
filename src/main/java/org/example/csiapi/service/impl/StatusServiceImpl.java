@@ -2,9 +2,11 @@ package org.example.csiapi.service.impl;
 
 import org.example.csiapi.mapper.StatusMapper;
 import org.example.csiapi.pojo.Status;
+import org.example.csiapi.pojo.StatusPage;
 import org.example.csiapi.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +17,22 @@ public class StatusServiceImpl implements StatusService {
     @Autowired
     public StatusServiceImpl(StatusMapper statusMapper) {
         this.statusMapper = statusMapper;
+    }
+
+    @Override
+    @Transactional
+    public StatusPage getStatusListDesc(Integer page, Integer pageSize) {
+        Long total = statusMapper.getCount();
+        List<Status> statusList = statusMapper.getStatusListDesc((page - 1) * pageSize, pageSize);
+        return new StatusPage(total, statusList);
+    }
+
+    @Override
+    @Transactional
+    public StatusPage getStatusListAsc(Integer page, Integer pageSize) {
+        Long total = statusMapper.getCount();
+        List<Status> statusList = statusMapper.getStatusListAsc((page - 1) * pageSize, pageSize);
+        return new StatusPage(total, statusList);
     }
 
     @Override
