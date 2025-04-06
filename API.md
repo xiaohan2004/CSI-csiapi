@@ -651,3 +651,175 @@
     "data": null
 }
 ```
+
+## 服务器监控接口
+
+### 1. 获取服务器完整信息
+- 端点: `/api/server/info`
+- 方法: GET
+- 描述: 获取服务器的CPU、内存、磁盘、网络和进程信息
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "cpu": {
+            "systemCpuLoad": 25.5,
+            "processCpuLoad": 10.2,
+            "coreCount": 8,
+            "model": "Intel(R) Core(TM) i7-10700K"
+        },
+        "memory": {
+            "total": 17179869184,
+            "used": 8589934592,
+            "free": 8589934592,
+            "usageRate": 50.0
+        },
+        "disks": [
+            {
+                "name": "sda",
+                "totalSpace": 256060514304,
+                "freeSpace": 128030257152,
+                "readBytes": 1024000,
+                "writeBytes": 512000
+            }
+        ],
+        "network": {
+            "bytesReceived": 1048576,
+            "bytesSent": 524288,
+            "packetsReceived": 1000,
+            "packetsSent": 500
+        },
+        "topProcesses": [
+            {
+                "pid": 1234,
+                "name": "java",
+                "cpuUsage": 15.5,
+                "memoryUsed": 1073741824,
+                "user": "root"
+            }
+        ]
+    }
+}
+```
+
+### 2. 获取CPU信息
+- 端点: `/api/server/cpu`
+- 方法: GET
+- 描述: 获取CPU使用率和基本信息
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "systemCpuLoad": 25.5,
+        "processCpuLoad": 10.2,
+        "coreCount": 8,
+        "model": "Intel(R) Core(TM) i7-10700K"
+    }
+}
+```
+
+### 3. 获取内存信息
+- 端点: `/api/server/memory`
+- 方法: GET
+- 描述: 获取内存使用情况
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "total": 17179869184,
+        "used": 8589934592,
+        "free": 8589934592,
+        "usageRate": 50.0
+    }
+}
+```
+
+### 4. 获取磁盘信息
+- 端点: `/api/server/disk`
+- 方法: GET
+- 描述: 获取磁盘使用情况和I/O信息
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": [
+        {
+            "name": "sda",
+            "totalSpace": 256060514304,
+            "freeSpace": 128030257152,
+            "readBytes": 1024000,
+            "writeBytes": 512000
+        },
+        {
+            "name": "sdb",
+            "totalSpace": 512060514304,
+            "freeSpace": 256030257152,
+            "readBytes": 2048000,
+            "writeBytes": 1024000
+        }
+    ]
+}
+```
+
+### 5. 获取网络信息
+- 端点: `/api/server/network`
+- 方法: GET
+- 描述: 获取网络流量信息
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "bytesReceived": 1048576,
+        "bytesSent": 524288,
+        "packetsReceived": 1000,
+        "packetsSent": 500
+    }
+}
+```
+
+### 6. 获取进程信息
+- 端点: `/api/server/processes`
+- 方法: GET
+- 参数:
+  - limit: 返回的进程数量（默认5）
+- 描述: 获取资源占用最多的进程信息
+- 请求示例: `GET http://localhost:8080/api/server/processes?limit=3`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": [
+        {
+            "pid": 1234,
+            "name": "java",
+            "cpuUsage": 15.5,
+            "memoryUsed": 1073741824,
+            "user": "root"
+        },
+        {
+            "pid": 5678,
+            "name": "mysql",
+            "cpuUsage": 8.3,
+            "memoryUsed": 536870912,
+            "user": "mysql"
+        },
+        {
+            "pid": 9012,
+            "name": "nginx",
+            "cpuUsage": 2.1,
+            "memoryUsed": 268435456,
+            "user": "nginx"
+        }
+    ]
+}
+```
