@@ -537,31 +537,6 @@
 }
 ```
 
-## 数据结构
-
-### Status 状态数据
-```json
-{
-"id": 1,
-"deviceId": "device001",
-"startTimestamp": 1648000000000,
-"endTimestamp": 1648000010000,
-"status": 1,
-"confidence": 0.95
-}
-```
-
-### RawData 原始数据
-```json
-{
-"id": 1,
-"deviceId": "device001",
-"timestamp": 1648000000000,
-"csiData": "...",
-"processed": 1
-}
-```
-
 ### 7. 创建原始数据
 - 端点: `/rawData`
 - 方法: POST
@@ -649,6 +624,31 @@
     "code": 0,
     "msg": "原始数据不存在",
     "data": null
+}
+```
+
+## 原始数据与状态数据结构说明
+
+### Status 状态数据
+```json
+{
+"id": 1,
+"deviceId": "device001",
+"startTimestamp": 1648000000000,
+"endTimestamp": 1648000010000,
+"status": 1,
+"confidence": 0.95
+}
+```
+
+### RawData 原始数据
+```json
+{
+"id": 1,
+"deviceId": "device001",
+"timestamp": 1648000000000,
+"csiData": "...",
+"processed": 1
 }
 ```
 
@@ -823,3 +823,37 @@
     ]
 }
 ```
+
+## 服务器监控接口数据结构说明
+
+### CPU信息 (CpuInfo)
+- systemCpuLoad: 系统CPU使用率（百分比，0-100）
+- processCpuLoad: 当前进程CPU使用率（百分比，0-100）
+- coreCount: CPU核心数
+- model: CPU型号
+
+### 内存信息 (MemoryInfo)
+- total: 总内存大小（字节）
+- used: 已使用内存大小（字节）
+- free: 可用内存大小（字节）
+- usageRate: 内存使用率（百分比，0-100）
+
+### 磁盘信息 (DiskInfo)
+- name: 磁盘名称
+- totalSpace: 磁盘总容量（字节）
+- freeSpace: 磁盘剩余空间（字节）
+- readBytes: 磁盘读取字节数
+- writeBytes: 磁盘写入字节数
+
+### 网络信息 (NetworkInfo)
+- bytesReceived: 接收的总字节数
+- bytesSent: 发送的总字节数
+- packetsReceived: 接收的数据包数量
+- packetsSent: 发送的数据包数量
+
+### 进程信息 (ProcessInfo)
+- pid: 进程ID
+- name: 进程名称
+- cpuUsage: 进程CPU使用率（百分比，0-100）
+- memoryUsed: 进程使用的内存大小（字节）
+- user: 进程所属用户
