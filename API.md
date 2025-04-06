@@ -267,6 +267,100 @@
 }
 ```
 
+### 10. 创建状态数据
+- 端点: `/status`
+- 方法: POST
+- 描述: 创建新的状态数据
+- 请求体:
+```json
+{
+    "deviceId": "device001",
+    "startTimestamp": 1648000000000,
+    "endTimestamp": 1648000010000,
+    "status": 1,
+    "confidence": 0.95
+}
+```
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "id": 101,
+        "deviceId": "device001",
+        "startTimestamp": 1648000000000,
+        "endTimestamp": 1648000010000,
+        "status": 1,
+        "confidence": 0.95
+    }
+}
+```
+
+### 11. 更新状态数据
+- 端点: `/status/{id}`
+- 方法: PUT
+- 参数:
+  - id: 状态数据ID（路径参数）
+- 描述: 更新指定ID的状态数据
+- 请求体:
+```json
+{
+    "deviceId": "device001",
+    "startTimestamp": 1648000000000,
+    "endTimestamp": 1648000010000,
+    "status": 2,
+    "confidence": 0.98
+}
+```
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "id": 101,
+        "deviceId": "device001",
+        "startTimestamp": 1648000000000,
+        "endTimestamp": 1648000010000,
+        "status": 2,
+        "confidence": 0.98
+    }
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "状态数据不存在",
+    "data": null
+}
+```
+
+### 12. 删除状态数据
+- 端点: `/status/{id}`
+- 方法: DELETE
+- 参数:
+  - id: 状态数据ID（路径参数）
+- 描述: 删除指定ID的状态数据
+- 请求示例: `DELETE http://localhost:8080/api/status/101`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": null
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "状态数据不存在",
+    "data": null
+}
+```
+
 ## 原始数据接口
 
 ### 1. 分页获取原始数据（降序）
@@ -465,5 +559,95 @@
 "timestamp": 1648000000000,
 "csiData": "...",
 "processed": 1
+}
+```
+
+### 7. 创建原始数据
+- 端点: `/rawData`
+- 方法: POST
+- 描述: 创建新的原始数据
+- 请求体:
+```json
+{
+    "deviceId": "device001",
+    "timestamp": 1648000000000,
+    "csiData": "...",
+    "processed": 0
+}
+```
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "id": 101,
+        "deviceId": "device001",
+        "timestamp": 1648000000000,
+        "csiData": "...",
+        "processed": 0
+    }
+}
+```
+
+### 8. 更新原始数据
+- 端点: `/rawData/{id}`
+- 方法: PUT
+- 参数:
+  - id: 原始数据ID（路径参数）
+- 描述: 更新指定ID的原始数据
+- 请求体:
+```json
+{
+    "deviceId": "device001",
+    "timestamp": 1648000000000,
+    "csiData": "...",
+    "processed": 1
+}
+```
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "id": 101,
+        "deviceId": "device001",
+        "timestamp": 1648000000000,
+        "csiData": "...",
+        "processed": 1
+    }
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "原始数据不存在",
+    "data": null
+}
+```
+
+### 9. 删除原始数据
+- 端点: `/rawData/{id}`
+- 方法: DELETE
+- 参数:
+  - id: 原始数据ID（路径参数）
+- 描述: 删除指定ID的原始数据
+- 请求示例: `DELETE http://localhost:8080/api/rawData/101`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": null
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "原始数据不存在",
+    "data": null
 }
 ```

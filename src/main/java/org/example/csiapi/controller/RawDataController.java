@@ -70,4 +70,27 @@ public class RawDataController {
     public Result getRawDataCount() {
         return Result.success(rawDataService.getCount());
     }
+
+    @PostMapping
+    public Result createRawData(@RequestBody RawData rawData) {
+        RawData createdRawData = rawDataService.createRawData(rawData);
+        return Result.success(createdRawData);
+    }
+
+    @PutMapping("/{id}")
+    public Result updateRawData(@PathVariable Long id, @RequestBody RawData rawData) {
+        RawData updatedRawData = rawDataService.updateRawData(id, rawData);
+        if (updatedRawData == null) {
+            return Result.error("原始数据不存在");
+        }
+        return Result.success(updatedRawData);
+    }
+
+    @DeleteMapping("/{id}")
+    public Result deleteRawData(@PathVariable Long id) {
+        if (rawDataService.deleteRawData(id)) {
+            return Result.success(null);
+        }
+        return Result.error("原始数据不存在");
+    }
 } 

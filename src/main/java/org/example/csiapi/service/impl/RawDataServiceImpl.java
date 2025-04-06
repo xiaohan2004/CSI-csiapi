@@ -58,4 +58,34 @@ public class RawDataServiceImpl implements RawDataService {
     public Long getCount() {
         return rawDataMapper.getCount();
     }
+
+    @Override
+    @Transactional
+    public RawData createRawData(RawData rawData) {
+        rawDataMapper.insert(rawData);
+        return rawData;
+    }
+
+    @Override
+    @Transactional
+    public RawData updateRawData(Long id, RawData rawData) {
+        RawData existingRawData = rawDataMapper.findById(id);
+        if (existingRawData == null) {
+            return null;
+        }
+        rawData.setId(id);
+        rawDataMapper.update(rawData);
+        return rawData;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteRawData(Long id) {
+        return rawDataMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public RawData getRawDataById(Long id) {
+        return rawDataMapper.findById(id);
+    }
 }

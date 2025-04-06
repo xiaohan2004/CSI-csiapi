@@ -12,4 +12,8 @@ public interface RawDataService {
     RawData getRawDataByTimestamp(Long timestamp);
     List<RawData> getRawDataBetween(Long startTime, Long endTime);
     Long getCount();
+    RawData createRawData(RawData rawData);
+    RawData updateRawData(Long id, RawData rawData);
+    boolean deleteRawData(Long id);
+    RawData getRawDataById(Long id);
 }

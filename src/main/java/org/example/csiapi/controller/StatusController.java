@@ -98,4 +98,27 @@ public class StatusController {
     public Result getStatusCount() {
         return Result.success(StatusService.getCount());
     }
+
+    @PostMapping
+    public Result createStatus(@RequestBody Status status) {
+        Status createdStatus = StatusService.createStatus(status);
+        return Result.success(createdStatus);
+    }
+
+    @PutMapping("/{id}")
+    public Result updateStatus(@PathVariable Long id, @RequestBody Status status) {
+        Status updatedStatus = StatusService.updateStatus(id, status);
+        if (updatedStatus == null) {
+            return Result.error("状态数据不存在");
+        }
+        return Result.success(updatedStatus);
+    }
+
+    @DeleteMapping("/{id}")
+    public Result deleteStatus(@PathVariable Long id) {
+        if (StatusService.deleteStatus(id)) {
+            return Result.success(null);
+        }
+        return Result.error("状态数据不存在");
+    }
 } 

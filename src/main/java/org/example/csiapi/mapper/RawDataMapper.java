@@ -1,7 +1,11 @@
 package org.example.csiapi.mapper;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.Options;
 import org.example.csiapi.pojo.RawData;
 
 import java.util.List;
@@ -26,4 +30,19 @@ public interface RawDataMapper {
 
     @Select("SELECT COUNT(*) FROM raw_data")
     Long getCount();
+
+    @Insert("INSERT INTO raw_data (device_id, timestamp, csi_data, processed) " +
+            "VALUES (#{deviceId}, #{timestamp}, #{csiData}, #{processed})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insert(RawData rawData);
+
+    @Update("UPDATE raw_data SET device_id = #{deviceId}, timestamp = #{timestamp}, " +
+            "csi_data = #{csiData}, processed = #{processed} WHERE id = #{id}")
+    int update(RawData rawData);
+
+    @Delete("DELETE FROM raw_data WHERE id = #{id}")
+    int deleteById(Long id);
+
+    @Select("SELECT * FROM raw_data WHERE id = #{id}")
+    RawData findById(Long id);
 }

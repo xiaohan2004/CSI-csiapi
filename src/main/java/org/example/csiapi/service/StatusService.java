@@ -15,4 +15,8 @@ public interface StatusService {
     Status getNewestStatusByEnd();
     List<Status> getStatusBetween(Long startTime, Long endTime);
     Long getCount();
+    Status createStatus(Status status);
+    Status updateStatus(Long id, Status status);
+    boolean deleteStatus(Long id);
+    Status getStatusById(Long id);
 }

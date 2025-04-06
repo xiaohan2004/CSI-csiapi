@@ -69,4 +69,34 @@ public class StatusServiceImpl implements StatusService {
     public Long getCount() {
         return statusMapper.getCount();
     }
+
+    @Override
+    @Transactional
+    public Status createStatus(Status status) {
+        statusMapper.insert(status);
+        return status;
+    }
+
+    @Override
+    @Transactional
+    public Status updateStatus(Long id, Status status) {
+        Status existingStatus = statusMapper.findById(id);
+        if (existingStatus == null) {
+            return null;
+        }
+        status.setId(id);
+        statusMapper.update(status);
+        return status;
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteStatus(Long id) {
+        return statusMapper.deleteById(id) > 0;
+    }
+
+    @Override
+    public Status getStatusById(Long id) {
+        return statusMapper.findById(id);
+    }
 }
