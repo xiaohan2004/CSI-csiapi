@@ -857,3 +857,266 @@
 - cpuUsage: 进程CPU使用率（百分比，0-100）
 - memoryUsed: 进程使用的内存大小（字节）
 - user: 进程所属用户
+
+## 守护进程管理接口
+
+### 1. CSI守护进程管理
+
+#### 1.1 获取CSI守护进程状态
+- 端点: `/api/daemon/csi/status`
+- 方法: GET
+- 描述: 获取CSI守护进程的运行状态
+- 请求示例: `GET http://localhost:8080/api/daemon/csi/status`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "running": true,
+        "processName": "csi_daemon.py"
+    }
+}
+```
+
+#### 1.2 获取CSI守护进程日志
+- 端点: `/api/daemon/csi/log`
+- 方法: GET
+- 参数:
+  - lines: 要获取的日志行数（默认100）
+- 描述: 获取CSI守护进程的最新日志
+- 请求示例: `GET http://localhost:8080/api/daemon/csi/log?lines=50`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "fileName": "csi_daemon.log",
+        "lines": [
+            "2024-03-06 10:00:00 INFO: 守护进程启动",
+            "2024-03-06 10:00:01 INFO: 加载模型成功",
+            // ... 更多日志行
+        ]
+    }
+}
+```
+
+#### 1.3 启动CSI守护进程
+- 端点: `/api/daemon/csi/start`
+- 方法: POST
+- 描述: 在conda环境中启动CSI守护进程
+- 请求示例: `POST http://localhost:8080/api/daemon/csi/start`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "启动成功"
+}
+```
+
+#### 1.4 停止CSI守护进程
+- 端点: `/api/daemon/csi/stop`
+- 方法: POST
+- 描述: 停止CSI守护进程
+- 请求示例: `POST http://localhost:8080/api/daemon/csi/stop`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "停止成功"
+}
+```
+
+### 2. Status守护进程管理
+
+#### 2.1 获取Status守护进程状态
+- 端点: `/api/daemon/status/status`
+- 方法: GET
+- 描述: 获取Status守护进程的运行状态
+- 请求示例: `GET http://localhost:8080/api/daemon/status/status`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "running": true,
+        "processName": "status_daemon.py"
+    }
+}
+```
+
+#### 2.2 获取Status守护进程日志
+- 端点: `/api/daemon/status/log`
+- 方法: GET
+- 参数:
+  - lines: 要获取的日志行数（默认100）
+- 描述: 获取Status守护进程的最新日志
+- 请求示例: `GET http://localhost:8080/api/daemon/status/log?lines=50`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "fileName": "status_daemon.log",
+        "lines": [
+            "2024-03-06 10:00:00 INFO: 守护进程启动",
+            "2024-03-06 10:00:01 INFO: 状态更新成功",
+            // ... 更多日志行
+        ]
+    }
+}
+```
+
+#### 2.3 启动Status守护进程
+- 端点: `/api/daemon/status/start`
+- 方法: POST
+- 描述: 在conda环境中启动Status守护进程
+- 请求示例: `POST http://localhost:8080/api/daemon/status/start`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "启动成功"
+}
+```
+
+#### 2.4 停止Status守护进程
+- 端点: `/api/daemon/status/stop`
+- 方法: POST
+- 描述: 停止Status守护进程
+- 请求示例: `POST http://localhost:8080/api/daemon/status/stop`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "停止成功"
+}
+```
+
+### 3. 模型管理
+
+#### 3.1 获取模型列表
+- 端点: `/api/daemon/model/list`
+- 方法: GET
+- 描述: 获取所有可用模型的文件名列表
+- 请求示例: `GET http://localhost:8080/api/daemon/model/list`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": [
+        "model_v1.pth",
+        "model_v2.pth",
+        "model_v3.pth"
+    ]
+}
+```
+
+#### 3.2 下载模型
+- 端点: `/api/daemon/model/download/{modelName}`
+- 方法: GET
+- 参数:
+  - modelName: 模型文件名（路径参数）
+- 描述: 下载指定的模型文件
+- 请求示例: `GET http://localhost:8080/api/daemon/model/download/model_v1.pth`
+- 响应:
+  - Content-Type: application/octet-stream
+  - Content-Disposition: attachment; filename="model_v1.pth"
+  - Body: 模型文件的二进制内容
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "下载模型失败: 模型不存在",
+    "data": null
+}
+```
+
+#### 3.3 上传模型
+- 端点: `/api/daemon/model/upload`
+- 方法: POST
+- 参数:
+  - file: 模型文件（multipart/form-data）
+- 描述: 上传新的模型文件
+- 请求示例: `POST http://localhost:8080/api/daemon/model/upload`
+- 请求头:
+  - Content-Type: multipart/form-data
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "模型上传成功"
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "上传文件为空",
+    "data": null
+}
+```
+
+#### 3.4 删除模型
+- 端点: `/api/daemon/model/{modelName}`
+- 方法: DELETE
+- 参数:
+  - modelName: 模型文件名（路径参数）
+- 描述: 删除指定的模型文件
+- 请求示例: `DELETE http://localhost:8080/api/daemon/model/model_v1.pth`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "模型删除成功"
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "模型不存在",
+    "data": null
+}
+```
+
+#### 3.5 选择模型
+- 端点: `/api/daemon/model/select/{modelName}`
+- 方法: POST
+- 参数:
+  - modelName: 模型文件名（路径参数）
+- 描述: 切换到指定的模型
+- 请求示例: `POST http://localhost:8080/api/daemon/model/select/model_v1.pth`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": "模型切换成功"
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "模型不存在",
+    "data": null
+}
+```
+
+## 注意事项
+1. 所有守护进程操作都在conda的25CAAC环境中执行
+2. 日志文件位于`../daemon/tmp/`目录下
+3. 模型文件位于`../daemon/saved_models/`目录下
+4. 模型切换功能需要重启相关守护进程才能生效
+5. 文件上传大小可能受到服务器配置限制
