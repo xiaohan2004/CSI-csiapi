@@ -73,13 +73,14 @@ public class DaemonServiceImpl implements DaemonService {
         if (file.isEmpty()) {
             throw new RuntimeException("上传文件为空");
         }
-
+    
         try {
             String fileName = file.getOriginalFilename();
-            File dest = new File(MODELS_DIR + "/" + fileName);
+            File modelsDir = new File(MODELS_DIR).getAbsoluteFile();
+            File dest = new File(modelsDir, fileName);
             
-            if (!dest.getParentFile().exists()) {
-                dest.getParentFile().mkdirs();
+            if (!modelsDir.exists()) {
+                modelsDir.mkdirs();
             }
             
             file.transferTo(dest);
