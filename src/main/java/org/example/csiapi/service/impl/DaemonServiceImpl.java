@@ -168,22 +168,36 @@ public class DaemonServiceImpl implements DaemonService {
 
     private void controlDaemon(String daemonScript, String action) {
         try {
+            // 获取 daemon 目录的绝对路径
+            File daemonDir = new File(DAEMON_DIR).getAbsoluteFile();
+            
             List<String> command = new ArrayList<>();
-            command.add("conda");
-            command.add("run");
-            command.add("-n");
-            command.add(CONDA_ENV);
-            command.add("python");
-            command.add(DAEMON_DIR + "/" + daemonScript);
+            command.add("/root/miniconda3/envs/" + CONDA_ENV + "/bin/python");
+            // 只使用脚本名，不使用完整路径
+            command.add(daemonScript);
             command.add(action);
 
             ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true);
+            
+            // 设置工作目录为 daemon 目录
+            pb.directory(daemonDir);
+            
             Process p = pb.start();
+            
+            // 读取进程的输出
+            StringBuilder output = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+            }
             
             int exitCode = p.waitFor();
             
             if (exitCode != 0) {
-                throw new RuntimeException(action + " 操作执行失败");
+                throw new RuntimeException(action + " 操作执行失败:\n" + output.toString());
             }
         } catch (Exception e) {
             throw new RuntimeException("执行 " + action + " 操作失败: " + e.getMessage());
