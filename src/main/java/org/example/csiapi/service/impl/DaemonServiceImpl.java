@@ -7,6 +7,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.nio.file.Files;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class DaemonServiceImpl implements DaemonService {
@@ -103,12 +105,37 @@ public class DaemonServiceImpl implements DaemonService {
 
     @Override
     public void selectModel(String modelName) {
-        File modelFile = new File(MODELS_DIR + "/" + modelName);
-        if (!modelFile.exists()) {
-            throw new RuntimeException("模型不存在");
-        }
+        try {
+            // 1. 检查模型文件是否存在
+            File modelFile = new File(MODELS_DIR + "/" + modelName);
+            if (!modelFile.exists()) {
+                throw new RuntimeException("模型不存在");
+            }
 
-        // TODO: 实现具体的模型切换逻辑
+            // 2. 停止守护进程
+            stopStatusDaemon();
+
+            // 3. 修改配置文件
+            File configFile = new File(DAEMON_DIR + "/predictor_config.ini");
+            List<String> newConfig = Arrays.asList(
+                "[predictor]",
+                "model_name = ResNet50",
+                "model_path = ./saved_models/" + modelName,
+                "signal_process_method = mean_filter",
+                "feature_type = 振幅"
+            );
+            
+            // 写入新的配置
+            Files.write(configFile.toPath(), newConfig, StandardCharsets.UTF_8);
+
+            // 4. 重新启动守护进程
+            startStatusDaemon();
+            
+        } catch (IOException e) {
+            throw new RuntimeException("修改配置文件失败: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("切换模型失败: " + e.getMessage());
+        }
     }
 
     @Override
@@ -118,6 +145,34 @@ public class DaemonServiceImpl implements DaemonService {
             throw new RuntimeException("模型不存在");
         }
         return modelFile;
+    }
+
+    @Override
+    public Map<String, String> getCurrentModel() {
+        try {
+            File configFile = new File(DAEMON_DIR + "/predictor_config.ini");
+            if (!configFile.exists()) {
+                throw new RuntimeException("配置文件不存在");
+            }
+
+            Map<String, String> config = new HashMap<>();
+            List<String> lines = Files.readAllLines(configFile.toPath(), StandardCharsets.UTF_8);
+            
+            for (String line : lines) {
+                line = line.trim();
+                if (line.startsWith("[") || line.isEmpty()) {
+                    continue;
+                }
+                String[] parts = line.split("=", 2);
+                if (parts.length == 2) {
+                    config.put(parts[0].trim(), parts[1].trim());
+                }
+            }
+            
+            return config;
+        } catch (IOException e) {
+            throw new RuntimeException("读取配置文件失败: " + e.getMessage());
+        }
     }
 
     private Map<String, Object> checkProcessStatus(String processName) {

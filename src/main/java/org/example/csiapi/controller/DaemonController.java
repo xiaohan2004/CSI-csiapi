@@ -152,4 +152,13 @@ public class DaemonController {
             return Result.error(e.getMessage());
         }
     }
+
+    @GetMapping("/model/current")
+    public Result getCurrentModel() {
+        try {
+            return Result.success(daemonService.getCurrentModel());
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+    }
 }

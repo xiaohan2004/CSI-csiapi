@@ -24,4 +24,5 @@ public interface DaemonService {
     void deleteModel(String modelName);
     void selectModel(String modelName);
     File downloadModel(String modelName);
+    Map<String, String> getCurrentModel();
 } 

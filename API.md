@@ -1114,6 +1114,33 @@
 }
 ```
 
+#### 3.6 获取当前模型配置
+- 端点: `/api/daemon/model/current`
+- 方法: GET
+- 描述: 获取当前正在使用的模型配置信息
+- 请求示例: `GET http://localhost:8080/api/daemon/model/current`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": {
+        "model_name": "ResNet50",
+        "model_path": "./saved_models/model.pth",
+        "signal_process_method": "mean_filter",
+        "feature_type": "振幅"
+    }
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "读取配置文件失败: 配置文件不存在",
+    "data": null
+}
+```
+
 ## 注意事项
 1. 所有守护进程操作都在conda的25CAAC环境中执行
 2. 日志文件位于`../daemon/tmp/`目录下
