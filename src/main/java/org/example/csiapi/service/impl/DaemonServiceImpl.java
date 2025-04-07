@@ -1,5 +1,6 @@
 package org.example.csiapi.service.impl;
 
+import org.example.csiapi.annotation.RecordLog;
 import org.example.csiapi.service.DaemonService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,11 +28,13 @@ public class DaemonServiceImpl implements DaemonService {
         return readLog("csi_daemon.log", lines);
     }
 
+    @RecordLog
     @Override
     public void startCsiDaemon() {
         controlDaemon("csi_daemon.py", "start");
     }
 
+    @RecordLog
     @Override
     public void stopCsiDaemon() {
         controlDaemon("csi_daemon.py", "stop");
@@ -47,11 +50,13 @@ public class DaemonServiceImpl implements DaemonService {
         return readLog("status_daemon.log", lines);
     }
 
+    @RecordLog
     @Override
     public void startStatusDaemon() {
         controlDaemon("status_daemon.py", "start");
     }
 
+    @RecordLog
     @Override
     public void stopStatusDaemon() {
         controlDaemon("status_daemon.py", "stop");
@@ -70,6 +75,7 @@ public class DaemonServiceImpl implements DaemonService {
             .collect(Collectors.toList());
     }
 
+    @RecordLog
     @Override
     public void uploadModel(MultipartFile file) {
         if (file.isEmpty()) {
@@ -91,6 +97,7 @@ public class DaemonServiceImpl implements DaemonService {
         }
     }
 
+    @RecordLog
     @Override
     public void deleteModel(String modelName) {
         File modelFile = new File(MODELS_DIR + "/" + modelName);
@@ -103,6 +110,7 @@ public class DaemonServiceImpl implements DaemonService {
         }
     }
 
+    @RecordLog
     @Override
     public void selectModel(String modelName) {
         try {
@@ -138,6 +146,7 @@ public class DaemonServiceImpl implements DaemonService {
         }
     }
 
+    @RecordLog
     @Override
     public File downloadModel(String modelName) {
         File modelFile = new File(MODELS_DIR + "/" + modelName);

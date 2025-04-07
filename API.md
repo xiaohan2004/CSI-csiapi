@@ -1141,9 +1141,43 @@
 }
 ```
 
-## 注意事项
+### 注意事项
 1. 所有守护进程操作都在conda的25CAAC环境中执行
 2. 日志文件位于`../daemon/tmp/`目录下
 3. 模型文件位于`../daemon/saved_models/`目录下
 4. 模型切换功能需要重启相关守护进程才能生效
 5. 文件上传大小可能受到服务器配置限制
+
+
+## 获取所有操作日志
+- 端点: `/api/log`
+- 方法: GET
+- 描述: 获取所有操作日志（最新的250条）
+- 请求示例: `GET http://localhost:8080/api/log`
+- 响应示例:
+```json
+{
+    "code": 1,
+    "msg": "success",
+    "data": [
+        {
+            "id": 1,
+            "operation": "User login",
+            "timestamp": "2023-10-01T12:00:00Z"
+        },
+        {
+            "id": 2,
+            "operation": "Data export",
+            "timestamp": "2023-10-01T12:05:00Z"
+        }
+    ]
+}
+```
+- 错误响应示例:
+```json
+{
+    "code": 0,
+    "msg": "获取操作日志失败",
+    "data": null
+}
+```

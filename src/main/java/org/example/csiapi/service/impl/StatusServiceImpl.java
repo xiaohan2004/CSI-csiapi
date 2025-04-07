@@ -1,5 +1,6 @@
 package org.example.csiapi.service.impl;
 
+import org.example.csiapi.annotation.RecordLog;
 import org.example.csiapi.mapper.StatusMapper;
 import org.example.csiapi.pojo.Status;
 import org.example.csiapi.pojo.StatusPage;
@@ -70,6 +71,7 @@ public class StatusServiceImpl implements StatusService {
         return statusMapper.getCount();
     }
 
+    @RecordLog
     @Override
     @Transactional
     public Status createStatus(Status status) {
@@ -77,6 +79,7 @@ public class StatusServiceImpl implements StatusService {
         return status;
     }
 
+    @RecordLog
     @Override
     @Transactional
     public Status updateStatus(Long id, Status status) {
@@ -89,6 +92,7 @@ public class StatusServiceImpl implements StatusService {
         return status;
     }
 
+    @RecordLog
     @Override
     @Transactional
     public boolean deleteStatus(Long id) {

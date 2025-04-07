@@ -1,5 +1,6 @@
 package org.example.csiapi.service.impl;
 
+import org.example.csiapi.annotation.RecordLog;
 import org.example.csiapi.mapper.RawDataMapper;
 import org.example.csiapi.pojo.RawData;
 import org.example.csiapi.pojo.RawDataPage;
@@ -59,6 +60,7 @@ public class RawDataServiceImpl implements RawDataService {
         return rawDataMapper.getCount();
     }
 
+    @RecordLog
     @Override
     @Transactional
     public RawData createRawData(RawData rawData) {
@@ -66,6 +68,7 @@ public class RawDataServiceImpl implements RawDataService {
         return rawData;
     }
 
+    @RecordLog
     @Override
     @Transactional
     public RawData updateRawData(Long id, RawData rawData) {
@@ -78,6 +81,7 @@ public class RawDataServiceImpl implements RawDataService {
         return rawData;
     }
 
+    @RecordLog
     @Override
     @Transactional
     public boolean deleteRawData(Long id) {
