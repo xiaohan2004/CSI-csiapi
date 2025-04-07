@@ -22,6 +22,12 @@ public class StatusController {
         this.rawDataService = rawDataService;
     }
 
+    @GetMapping("/light")
+    public int getLightStatus() {
+        Status status = StatusService.getNewStatus();
+        return status.getStatus();
+    }
+
     // 分页获取状态（降序）
     @GetMapping("/desc")
     public Result getStatusDesc(
