@@ -236,7 +236,7 @@ public class DaemonServiceImpl implements DaemonService {
             File daemonDir = new File(DAEMON_DIR).getAbsoluteFile();
             
             List<String> command = new ArrayList<>();
-            command.add("/root/miniconda3/envs/" + CONDA_ENV + "/bin/python");
+            command.add("/root/anaconda3/envs/" + CONDA_ENV + "/bin/python");
             // 只使用脚本名，不使用完整路径
             command.add(daemonScript);
             command.add(action);
