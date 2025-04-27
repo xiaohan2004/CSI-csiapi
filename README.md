@@ -90,7 +90,7 @@ src/main/java/org/example/csiapi/
 - API响应格式统一为`{code, msg, data}`结构
 
 ## 许可证
-[许可证类型]
+MIT License
 
 ## 贡献指南
 1. Fork 项目
